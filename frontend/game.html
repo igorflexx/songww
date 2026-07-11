@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>uknowursong</title>
+  <link rel="icon" type="image/svg+xml" href="/uknowursong-logo.svg?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
+  <link rel="stylesheet" href="/style.css?v=8" />
+</head>
+<body>
+  <a class="back-to-portfolio" href="/">← igorprojects</a>
+  <div class="bg-fireflies" aria-hidden="true"></div>
+
+  <main class="app">
+    <header>
+      <h1 id="brand" class="brand-link">
+        <img src="/uknowursong-logo.svg?v=2" alt="" class="brand-logo" />
+        <span>uknowursong</span>
+      </h1>
+      <div class="header-right">
+        <div id="score" class="score hidden">
+          <span class="score-value" id="scoreValue">0</span>
+          <span class="score-label">очков</span>
+        </div>
+        <div id="user-bar" class="user-bar hidden">
+          <span id="user-login" class="muted"></span>
+          <button id="logout" class="ghost small">Выйти</button>
+        </div>
+      </div>
+    </header>
+
+    <section id="screen-welcome" class="card hero">
+      <div class="hero-content">
+        <img src="/uknowursong-logo.svg?v=2" alt="" class="hero-logo" />
+        <div class="hero-eyebrow">УГАДАЙ ТРЕК ЗА СЕКУНДЫ</div>
+        <h2 class="hero-title">Превращаем твою музыку в&nbsp;игру</h2>
+        <p class="hero-tagline">
+          Слушаешь 1 секунду — угадываешь название. Не получилось — даём ещё 2, потом 4, 7…
+          до 16 секунд. Играй по любимым исполнителям, жанрам или своим плейлистам.
+        </p>
+        <div class="hero-actions">
+          <button id="goPlay" class="big">Играть →</button>
+          <button id="goAbout" class="ghost big">О нас</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-about" class="card hidden">
+      <h2>О сайте</h2>
+      <p class="muted" style="margin-top: 0">
+        Музыкальная угадайка. Тебе включают всё больший фрагмент трека, и нужно
+        за минимальное время угадать название или исполнителя. Три режима игры:
+      </p>
+      <ul class="about-list">
+        <li><strong>По исполнителям</strong> — выбери до 20 любимых, треки берутся из их топов.</li>
+        <li><strong>По жанру</strong> — поп, рок, рэп, фонк, классика и другое.</li>
+        <li><strong>Свои плейлисты</strong> — играй по собственной библиотеке.</li>
+      </ul>
+      <p class="muted">
+        Связь, идеи, баги — пиши в Telegram:
+        <a href="https://t.me/igor_flexxx" target="_blank" rel="noreferrer">@igor_flexxx</a>
+      </p>
+      <div class="controls" style="margin-top: 22px">
+        <button id="backFromAbout" class="ghost">← На главную</button>
+      </div>
+    </section>
+
+    <section id="screen-modes" class="card hidden">
+      <h2>Выбери режим</h2>
+      <div class="modes-grid">
+        <button class="mode-card" data-mode="artists">
+          <div class="mode-icon">♫</div>
+          <div class="mode-title">По исполнителям</div>
+          <div class="mode-desc">Выбери до 20 любимых артистов</div>
+        </button>
+        <button class="mode-card" data-mode="genre">
+          <div class="mode-icon">⊕</div>
+          <div class="mode-title">По жанру</div>
+          <div class="mode-desc">Поп, рок, рэп, фонк и другие</div>
+        </button>
+        <button class="mode-card" data-mode="personal">
+          <div class="mode-icon">★</div>
+          <div class="mode-title">Свои плейлисты</div>
+          <div class="mode-desc">По твоей музыкальной библиотеке</div>
+        </button>
+      </div>
+      <div class="controls" style="margin-top: 22px">
+        <button id="backFromModes" class="ghost">← Назад</button>
+      </div>
+    </section>
+
+    <section id="screen-artists" class="card hidden">
+      <h2>Выбери исполнителей</h2>
+      <div class="link-block">
+        <label>ПОИСК</label>
+        <div class="controls">
+          <div class="input-wrap">
+            <input id="artistSearch" type="text" placeholder="Имя исполнителя..." autocomplete="off" />
+            <ul id="artistResults" class="suggestions hidden"></ul>
+          </div>
+        </div>
+      </div>
+      <div class="selected-block">
+        <div class="selected-header">
+          Выбрано: <span id="artistCount">0</span> / 20
+        </div>
+        <div id="selectedArtists" class="chip-list"></div>
+      </div>
+      <div class="controls" style="margin-top: 22px">
+        <button id="backFromArtists" class="ghost">← Назад</button>
+        <button id="startArtists" disabled>Начать игру</button>
+      </div>
+    </section>
+
+    <section id="screen-genres" class="card hidden">
+      <h2>Выбери жанр</h2>
+      <div id="genresGrid" class="genres-grid"></div>
+      <div class="controls" style="margin-top: 22px">
+        <button id="backFromGenres" class="ghost">← Назад</button>
+      </div>
+    </section>
+
+    <section id="screen-auth" class="card hidden">
+      <h2>Войти по токену</h2>
+      <p id="authHint" class="muted small">
+        Введи свой OAuth-токен. Хранится только в памяти процесса.
+      </p>
+      <div class="controls">
+        <input id="tokenInput" type="password" placeholder="y0_AAA..." autocomplete="off" />
+        <button id="tokenSubmit">Войти</button>
+      </div>
+      <div id="tokenStatus" class="muted small"></div>
+      <div class="controls" style="margin-top: 16px">
+        <button id="backFromAuth" class="ghost">← Назад</button>
+      </div>
+    </section>
+
+    <section id="screen-pick" class="card hidden">
+      <h2>Выбери плейлист</h2>
+      <div class="link-block">
+        <label for="linkInput">СЫГРАТЬ ПО ССЫЛКЕ</label>
+        <div class="controls">
+          <input id="linkInput" type="url" placeholder="Ссылка на плейлист..." />
+          <button id="playFromLink">Играть</button>
+        </div>
+        <div id="linkStatus" class="muted"></div>
+      </div>
+      <hr />
+      <button id="loadPlaylists">Загрузить мои плейлисты</button>
+      <ul id="playlists"></ul>
+      <div class="controls" style="margin-top: 16px">
+        <button id="backFromPick" class="ghost">← Назад</button>
+      </div>
+    </section>
+
+    <section id="screen-game" class="card hidden">
+      <div class="game-header">
+        <button id="backToModes" class="ghost small" title="Назад к режимам">← К режимам</button>
+        <h2>Угадай трек</h2>
+      </div>
+
+      <div class="progress">
+        <div class="bar-wrap">
+          <div class="bar" id="bar">
+            <div class="bar-ticks" id="barTicks"></div>
+            <div class="bar-unlocked" id="barUnlocked"></div>
+            <div class="bar-fill" id="bar-fill"></div>
+            <div class="bar-cursor" id="barCursor"></div>
+            <div class="bar-step-badge" id="barStepBadge">1.0с</div>
+          </div>
+          <div id="bar-label">0.0 / 1.0 с</div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="play">▶ Слушать</button>
+        <div class="input-wrap">
+          <input id="guess" type="text" placeholder="Название трека или исполнитель..." autocomplete="off" spellcheck="false" />
+          <ul id="suggestions" class="suggestions hidden"></ul>
+        </div>
+        <button id="submit">Ответить</button>
+        <button id="skip" class="ghost">Пропустить</button>
+      </div>
+
+      <div class="status-line" id="statusLine"></div>
+
+      <ol id="attempts" class="attempts"></ol>
+
+      <div id="result" class="result hidden">
+        <img id="cover" alt="" />
+        <div>
+          <div id="answer-title"></div>
+          <div id="answer-artists" class="muted"></div>
+          <div id="round-score" class="round-score"></div>
+        </div>
+        <button id="next">Следующий трек</button>
+      </div>
+    </section>
+  </main>
+
+  <a id="tg-link" class="tg-link" href="https://t.me/igor_flexxx" target="_blank" rel="noreferrer" title="Telegram">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+      <path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/>
+    </svg>
+    <span>@igor_flexxx</span>
+  </a>
+
+  <audio id="audio" preload="auto"></audio>
+  <script src="/app.js?v=6"></script>
+</body>
+</html>
