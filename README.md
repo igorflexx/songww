@@ -14,7 +14,9 @@
 - `frontend/style.css` - стили музыкальной игры.
 - `frontend/portfolio.css` - стили главной страницы.
 - `frontend/photo.css` - стили страницы `photo++`.
-- `run.command` - запуск проекта с публичным туннелем.
-- `run-local.command` - локальный запуск без туннеля.
+- `run.command` - запуск проекта с публичным туннелем из терминала `macOS` или `Linux`.
+- `run-local.command` - локальный запуск без туннеля из терминала `macOS` или `Linux`.
+- `runwin.cmd` - запуск проекта с публичным туннелем из `Windows Terminal`, `cmd` или PowerShell.
+- `runlocalwin.cmd` - локальный запуск без туннеля из `Windows Terminal`, `cmd` или PowerShell.
 - `kill.command` - остановка локального сервера и публичного туннеля.
 - `kill-local.command` - остановка только локального сервера.
