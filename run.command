@@ -9,6 +9,16 @@ SSH_PID=""
 SSH_LOG=$(mktemp -t lhr_run)
 URL=""
 
+stop_port_processes() {
+  local pids
+  pids=$(lsof -t -i :"$PORT" -sTCP:LISTEN 2>/dev/null || true)
+  if [ -n "$pids" ]; then
+    echo "⚠️  Порт $PORT занят. Останавливаю старый процесс..."
+    echo "$pids" | xargs kill -9 2>/dev/null || true
+    sleep 1
+  fi
+}
+
 cleanup() {
   echo
   echo "→ Останавливаю..."
@@ -19,11 +29,7 @@ cleanup() {
 }
 trap cleanup INT TERM EXIT
 
-if lsof -i :"$PORT" -sTCP:LISTEN >/dev/null 2>&1; then
-  echo "⚠️  Порт $PORT занят. Запускаю ./kill.command и пробую снова."
-  ./kill.command >/dev/null 2>&1 || true
-  sleep 1
-fi
+stop_port_processes
 
 echo "▶ uvicorn → http://127.0.0.1:$PORT"
 .venv/bin/uvicorn backend.main:app --host 127.0.0.1 --port "$PORT" --reload &

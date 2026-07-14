@@ -18,5 +18,3 @@
 - `run-local.command` - локальный запуск без туннеля из терминала `macOS` или `Linux`.
 - `runwin.cmd` - запуск проекта с публичным туннелем из `Windows Terminal`, `cmd` или PowerShell.
 - `runlocalwin.cmd` - локальный запуск без туннеля из `Windows Terminal`, `cmd` или PowerShell.
-- `kill.command` - остановка локального сервера и публичного туннеля.
-- `kill-local.command` - остановка только локального сервера.

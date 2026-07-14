@@ -5,11 +5,17 @@ cd "$(dirname "$0")"
 
 PORT=8000
 
-if lsof -i :"$PORT" -sTCP:LISTEN >/dev/null 2>&1; then
-  echo "⚠️  Порт $PORT занят. Гашу старый процесс..."
-  ./kill-local.command >/dev/null 2>&1 || true
-  sleep 1
-fi
+stop_port_processes() {
+  local pids
+  pids=$(lsof -t -i :"$PORT" -sTCP:LISTEN 2>/dev/null || true)
+  if [ -n "$pids" ]; then
+    echo "⚠️  Порт $PORT занят. Останавливаю старый процесс..."
+    echo "$pids" | xargs kill -9 2>/dev/null || true
+    sleep 1
+  fi
+}
+
+stop_port_processes
 
 echo "▶ Запускаю сервер на http://127.0.0.1:$PORT"
 echo
