@@ -11,6 +11,8 @@ Portfolio project with a small Python backend and static frontend assets.
 - `kill.command` - stops the backend and also closes public tunnel processes ONLY FOR LINUX TERMINAL
 - `kill-local.command` - stops only the local backend processes ONLY FOR LINUX TERMINAL
 
+All `*.command` files in this repository are terminal bash scripts. Start them with `bash ./file.command`.
+
 ## Run scripts
 
 ### `run.command`
